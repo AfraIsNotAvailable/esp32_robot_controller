@@ -1,18 +1,30 @@
 #include <Arduino.h>
+#include "Looper.h"
+#include "Drive.h"
 
-// put function declarations here:
-int myFunction(int, int);
+Looper enabledLooper(0.02);
+
+Drive& drive = Drive::getInstance();
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+    Serial.begin(115200);
+
+    drive.registerEnabledLoops(&enabledLooper);
+
+    enabledLooper.start();
+    
+    Serial.println("Robot Initialized");
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
+    double joy_x = 0.0; 
+    double joy_y = 0.5; 
+    double joy_rot = 0.0;
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+    drive.setOpenLoop(joy_y, joy_x, joy_rot);
+
+    drive.readPeriodicInputs();
+    drive.writePeriodicOutputs();
+
+    delay(20);
 }
