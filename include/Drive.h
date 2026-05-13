@@ -17,7 +17,6 @@ public:
         double des_vy = 0;
         double des_omega = 0;
 
-        // OUTPUTS
         double fl_demand = 0;
         double fr_demand = 0;
         double bl_demand = 0;
@@ -36,7 +35,7 @@ private:
 
     void setMotor(int pwm_pin, int dir_pin, double speed);
 
-    class DriveLoop : public Loop {
+    class   DriveLoop : public Loop {
         Drive* drive_;
     public:
         DriveLoop(Drive* d) : drive_(d) {}
